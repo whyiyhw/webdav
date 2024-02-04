@@ -163,7 +163,7 @@ func (w responseWriterNoBody) Header() http.Header {
 	return w.ResponseWriter.Header()
 }
 
-// Write suprresses the body.
+// Write suppresses the body.
 func (w responseWriterNoBody) Write(data []byte) (int, error) {
 	return 0, nil
 }

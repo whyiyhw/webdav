@@ -8,17 +8,17 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/hacdias/webdav/v4/lib"
 	"github.com/spf13/pflag"
 	v "github.com/spf13/viper"
+	"github.com/whyiyhw/webdav/lib"
 	"golang.org/x/net/webdav"
 )
 
 func parseRules(raw []interface{}, defaultModify bool) []*lib.Rule {
-	rules := []*lib.Rule{}
+	var rules []*lib.Rule
 
-	for _, v := range raw {
-		if r, ok := v.(map[interface{}]interface{}); ok {
+	for _, vs := range raw {
+		if r, ok := vs.(map[interface{}]interface{}); ok {
 			rule := &lib.Rule{
 				Regex:  false,
 				Allow:  false,
@@ -75,8 +75,8 @@ func loadFromEnv(v string) (string, error) {
 
 func parseUsers(raw []interface{}, c *lib.Config) {
 	var err error
-	for _, v := range raw {
-		if u, ok := v.(map[interface{}]interface{}); ok {
+	for _, vs := range raw {
+		if u, ok := vs.(map[interface{}]interface{}); ok {
 			username, ok := u["username"].(string)
 			if !ok {
 				log.Fatal("user needs an username")

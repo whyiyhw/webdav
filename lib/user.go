@@ -7,7 +7,7 @@ import (
 	"golang.org/x/net/webdav"
 )
 
-// Rule is a dissalow/allow rule.
+// Rule is a dismissal/allow rule.
 type Rule struct {
 	Regex  bool
 	Allow  bool

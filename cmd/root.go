@@ -6,8 +6,10 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	v "github.com/spf13/viper"
+
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -56,16 +58,16 @@ set WD_CERT.`,
 		cfg := readConfig(flags)
 
 		// Build address and listener
-		laddr := getOpt(flags, "address")
-		var lnet string
-		if strings.HasPrefix(laddr, "unix:") {
-			laddr = laddr[5:]
-			lnet = "unix"
+		ladder := getOpt(flags, "address")
+		var listenerNet string
+		if strings.HasPrefix(ladder, "unix:") {
+			ladder = ladder[5:]
+			listenerNet = "unix"
 		} else {
-			laddr = laddr + ":" + getOpt(flags, "port")
-			lnet = "tcp"
+			ladder = ladder + ":" + getOpt(flags, "port")
+			listenerNet = "tcp"
 		}
-		listener, err := net.Listen(lnet, laddr)
+		listener, err := net.Listen(listenerNet, ladder)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -116,7 +118,8 @@ func initConfig() {
 	v.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
 	if err := v.ReadInConfig(); err != nil {
-		if _, ok := err.(v.ConfigParseError); ok {
+		var configParseError v.ConfigParseError
+		if errors.As(err, &configParseError) {
 			panic(err)
 		}
 		cfgFile = "No config file used"

@@ -77,12 +77,14 @@ func (c *Config) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		username, password, ok := r.BasicAuth()
 		zap.L().Info("login attempt", zap.String("username", username), zap.String("remote_address", r.RemoteAddr))
 		if !ok {
+			zap.L().Info("not basic authorized", zap.String("remote_address", r.RemoteAddr))
 			http.Error(w, "Not authorized", 401)
 			return
 		}
 
 		user, ok := c.Users[username]
 		if !ok {
+			zap.L().Info("not match authorized", zap.String("username", username), zap.String("remote_address", r.RemoteAddr))
 			http.Error(w, "Not authorized", 401)
 			return
 		}
@@ -147,7 +149,7 @@ func (c *Config) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	u.Handler.ServeHTTP(w, r)
 }
 
-// responseWriterNoBody is a wrapper used to suprress the body of the response
+// responseWriterNoBody is a wrapper used to suppress the body of the response
 // to a request. Mainly used for HEAD requests.
 type responseWriterNoBody struct {
 	http.ResponseWriter

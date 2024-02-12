@@ -1,4 +1,4 @@
-FROM golang:1.21.6-alpine AS builder
+FROM --platform=linux/amd64 golang:1.21.7-alpine AS builder
 
 # 为镜像设置必要的环境变量
 ENV GO111MODULE=on \
@@ -29,7 +29,7 @@ RUN go mod download
 COPY . .
 
 # 将代码编译成二进制可执行文件 app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o webdav ./main.go
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -a -installsuffix cgo -o webdav ./main.go
 
 # 创建一个小镜像
 FROM scratch
@@ -44,4 +44,4 @@ COPY --from=builder /build/webdav /webdav
 
 EXPOSE 80
 
-CMD ["/webdav"]
+ENTRYPOINT [ "/webdav" ]

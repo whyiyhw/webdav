@@ -76,7 +76,7 @@ func loadFromEnv(v string) (string, error) {
 func parseUsers(raw []interface{}, c *lib.Config) {
 	var err error
 	for _, vs := range raw {
-		if u, ok := vs.(map[interface{}]interface{}); ok {
+		if u, ok := vs.(map[string]interface{}); ok {
 			username, ok := u["username"].(string)
 			if !ok {
 				log.Fatal("user needs an username")
@@ -87,8 +87,8 @@ func parseUsers(raw []interface{}, c *lib.Config) {
 				checkErr(err)
 			}
 
-			password, ok := u["password"].(string)
-			if !ok {
+			password, passwordOk := u["password"].(string)
+			if !passwordOk {
 				password = ""
 
 				if numPwd, ok := u["password"].(int); ok {

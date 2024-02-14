@@ -8,11 +8,13 @@
 ## Install
 
 Please refer to the [Releases page](https://github.com/whyiyhw/webdav/releases) for more information. There, you can either download the binaries or find the Docker commands to install WebDAV.
+
 请查看[发布页面](https://github.com/whyiyhw/webdav/releases)获取更多信息。在那里，您可以下载二进制文件，也可以找到安装WebDAV的Docker命令。
 
 ## Usage
 
 ```webdav``` command line interface is really easy to use so you can easily create a WebDAV server for your own user. By default, it runs on a random free port and supports JSON, YAML and TOML configuration. An example of a YAML configuration with the default configurations:
+
 ```webdav``` 命令行界面非常易于使用，因此您可以轻松为自己的用户创建WebDAV服务器。默认情况下，它在随机空闲端口上运行，并支持JSON、YAML和TOML配置。以下是一个包含默认配置的YAML配置示例：
 
 ```yaml
@@ -89,24 +91,30 @@ users:
 ```
 
 There are more ways to customize how you run WebDAV through flags and environment variables. Please run `webdav --help` for more information on that.
+
 通过命令行参数和环境变量，你可以更多的定制WebDAV的运行方式 。请运行 `webdav --help` 获取更多信息。
 
 ### Systemd
 
 An example of how to use this with `systemd` is on [webdav.service.example](/webdav.service.example).
+
 如何在`systemd`中使用的示例在 [webdav.service.example](/webdav.service.example)。
 
 ### CORS
 
 The `allowed_*` properties are optional, the default value for each of them will be `*`. `exposed_headers` is optional as well, but is not set if not defined. Setting `credentials` to `true` will allow you to:
+
 这些`allowed_*`属性是可选的，每个属性的默认值都是`*`。`exposed_headers`也是可选的，但如果未定义，则不会设置。将`credentials`设置为`true`将允许你：
+
 1. Use `withCredentials = true` in javascript.
-在javascript中使用`withCredentials = true`。
+   - 在javascript中使用`withCredentials = true`。
+
 2. Use the `username:password@host` syntax.
-使用`username:password@host`语法。
+   - 使用`username:password@host`语法。
 
 ### Reverse Proxy Service
 When you use a reverse proxy implementation like `Nginx` or `Apache`, please note the following fields to avoid causing `502` errors
+
 当你使用反向代理实现，如`Nginx`或`Apache`，请注意以下字段，以避免引起`502`错误
 ```text
 location / {

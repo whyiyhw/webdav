@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  webdav:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - HOST=0.0.0.0
+    command: --config /opt/webdav.config.yml
+    ports:
+      - "80:80"
+    volumes:
+      - ./webdav.config.yml:/opt/webdav.config.yml
+      - ./data:/data
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

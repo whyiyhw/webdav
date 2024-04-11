@@ -1,0 +1,19 @@
+address: 0.0.0.0
+port: 80
+auth: true
+tls: false
+prefix: /
+debug: true
+
+scope: .
+modify: true
+rules: []
+
+cors:
+  enabled: false
+  credentials: false
+
+users:
+  - username: admin
+    password: "admin123456"
+    scope: /data/demo

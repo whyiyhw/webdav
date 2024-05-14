@@ -14,6 +14,7 @@ services:
       - ./webdav.config.yml:/opt/webdav.config.yml
       - ./data:/data
     restart: always
+    container_name: webdav
     logging:
       driver: "json-file"
       options:
